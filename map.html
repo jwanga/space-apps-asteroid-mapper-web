@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <style type="text/css">
+            canvas {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="socket.io.js"></script>
+        <script src="three.js"></script>
+        <script type="text/javascript">
+            var scene, camera, renderer, geometry, material, shape, particles, particlesMaterial, particleBuffer, particleSystem;
+
+            particleBuffer = [];
+
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer();
+            particles = new THREE.Geometry();
+            geometry = new THREE.SphereGeometry();
+            material = new THREE.MeshBasicMaterial({color: '#ff0000', wireframe: true});
+            particleMaterials = new THREE.ParticleBasicMaterial({
+                color: 0xFFFFFF,
+                size: 10,
+                transparent: true
+            });
+
+            for(var i = 0; i < 10000; i++){
+                particles.vertices.push(new THREE.Vector3(0, 0, 0));  
+            }
+
+            particleSystem = new THREE.ParticleSystem(particles, particlesMaterial);
+            particleSystem.geometry.dynamic = true;
+
+            scene.add(particleSystem);
+
+            shape = new THREE.Mesh(geometry, material);
+
+            //scene.add(shape);
+            camera.position.z = 75;
+            renderer.setClearColorHex(0x00000, 1);
+            renderer.setSize( window.innerWidth, window.innerHeight);
+
+            document.body.appendChild(renderer.domElement);
+            (function render () {
+
+                //particleSystem.rotation.x += .1;
+                particleSystem.rotation.y += .1;
+
+                renderer.render(scene, camera);
+
+                requestAnimationFrame(render);
+            })();
+
+            function place(x,y,z){
+                var pool = particles.vertices.filter(function(element, index, array){
+                    return element.x === 0 && element.y === 0 && element.z === 0; 
+                });
+
+                pool[0].x = x;
+                particles.verticesNeedUpdate = true;
+            }
+
+            for(var i = 0; i < 200; i++){
+                place(i * 20, 0, 0);
+            }
+
+            
+
+        </script>
+    </body>
+</html>
