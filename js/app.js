@@ -71,7 +71,7 @@ io.sockets.on('connection', function (socket) {
 
     } else if( data.my == 'left' ){
 
-      client.left(.2);
+      client.left(.05);
 
       console.log("went left");
       socket.emit('moving-back', 'Going Left');
@@ -79,7 +79,7 @@ io.sockets.on('connection', function (socket) {
     
     } else if( data.my == 'right' ){
 
-       client.right(.2);
+       client.right(.05);
 
       console.log("went right");
       socket.emit('moving-back', 'Going Right');
@@ -120,14 +120,14 @@ io.sockets.on('connection', function (socket) {
       
     } else if( data.my == 'front' ){
 
-      client.front(.15);
+      client.front(.05);
 
       console.log("forward");
       socket.emit('moving-back', 'Forward');
       
     } else if( data.my == 'back' ){
 
-      client.back(.15);
+      client.back(.05);
 
       console.log("backwards");
       socket.emit('moving-back', 'Backwards');
@@ -141,14 +141,14 @@ io.sockets.on('connection', function (socket) {
       
     } else if( data.my == 'clockwise' ){
 
-      client.clockwise(.2);
+      client.clockwise(.05);
 
       console.log("Rotating Clockwise");
       socket.emit('moving-back', 'Rotating Clockwise');
       
     } else if( data.my == 'counter-clockwise' ){
 
-      client.counterClockwise(.2);
+      client.counterClockwise(.05);
 
       console.log("Rotating Counter Clockwise");
       socket.emit('moving-back', 'Rotating Counter Clockwise');
