@@ -38,17 +38,29 @@ jQuery(document).ready(function($){
                 "on_keyup"   : function() { $('#steady').trigger('click'); }
             },
             {
+                "keys"          : "k",
+                "is_exclusive"  : true,
+                "on_keydown" : function() { $('#up').trigger('click'); },
+                "on_keyup"   : function() { $('#steady').trigger('click'); }
+            },
+            {
                 "keys"          : "j",
                 "is_exclusive"  : true,
                 "on_keydown" : function() { $('#down').trigger('click'); },
                 "on_keyup"   : function() { $('#steady').trigger('click'); }
             },
             {
-                "keys"          : "k",
+                "keys"          : "up",
                 "is_exclusive"  : true,
                 "on_keydown" : function() { $('#up').trigger('click'); },
                 "on_keyup"   : function() { $('#steady').trigger('click'); }
             },
+            {
+                "keys"          : "down",
+                "is_exclusive"  : true,
+                "on_keydown" : function() { $('#down').trigger('click'); },
+                "on_keyup"   : function() { $('#steady').trigger('click'); }
+            }
         ];
 
         keypress.register_many(my_combos);
