@@ -53,28 +53,87 @@ io.sockets.on('connection', function (socket) {
 
     if( data.my == 'take-off' ){
 
+      console.log('starting');
+      socket.emit('moving-back', 'starting');
+
+      // require('tty').setRawMode(true);
+
+      client.disableEmergency();      
       client.takeoff();
 
       console.log("took off");
-    
+      socket.emit('moving-back', 'Took Off');
+
     } else if( data.my == 'left' ){
 
       client.left(.2);
 
       console.log("went left");
+      socket.emit('moving-back', 'Going Left');
+
     
     } else if( data.my == 'right' ){
 
        client.right(.2);
 
       console.log("went right");
+      socket.emit('moving-back', 'Going Right');
 
     } else if( data.my == 'land' ){
+
+      socket.emit('moving-back', 'Preparing to land');
 
       client.stop();
       client.land();
 
       console.log("just landed");
+      socket.emit('moving-back', 'Landed');
+    }
+    else if( data.my == 'up' ){
+
+      client.stop();
+      client.up(.1);
+
+      console.log("went up a little");
+      socket.emit('moving-back', 'A little up');
+    }
+    else if( data.my == 'down' ){
+
+      client.stop();
+      client.down(.1);
+
+      console.log("went down a little");
+      socket.emit('moving-back', 'A little down');
+
+
+    } else if( data.my == 'reset' ){
+
+      client.disableEmergency();
+
+      console.log("reseted");
+      socket.emit('moving-back', 'Reset');
+      
+    } else if( data.my == 'front' ){
+
+      client.front(.15);
+
+      console.log("forward");
+      socket.emit('moving-back', 'Forward');
+      
+    } else if( data.my == 'back' ){
+
+      client.back(.15);
+
+      console.log("backwards");
+      socket.emit('moving-back', 'Backwards');
+      
+    } else if( data.my == 'steady' ){
+
+      client.front(0);
+
+      console.log("Steady");
+      socket.emit('moving-back', 'Steady');
+      
     } else {
 
       console.log('no action');

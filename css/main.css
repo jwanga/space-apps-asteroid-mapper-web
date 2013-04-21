@@ -1,7 +1,30 @@
 
 
+.btn{
 
-.half-right{
-
-		margin-left: 105px;
+	padding:10px 20px;
+	width: 50px;
 }
+
+.btn.offset1{
+	margin-left: 97px;
+}
+
+.btn.btn-success{
+	margin-left: 49px;
+}
+
+#console{
+	overflow: scroll;
+	max-height: 300px;
+	
+
+}	
+
+	#console p{
+
+		font-size: 12px;
+		line-height: .7em;
+		font-family: cursive;
+
+	}
