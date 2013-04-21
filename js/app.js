@@ -1,57 +1,52 @@
 var app = require('http').createServer(handler)
   , io = require('socket.io').listen(app)
   , fs = require('fs')
+  , cv = require('opencv')
 
 app.listen(8080); // I changed the port from 80 to 8080 incase you are running a web server
-var png = null;
-var client = null;
+var arDrone = require('ar-drone');
+var client = arDrone.createClient();
+var png = client.createPngStream({ log : process.stderr });
+png.on('error', function (err) {
+        console.error('png stream ERROR: ' + err);
+    });
 
+png.on('data', sendPng);
+
+var i = 0;
 function handler (req, res) {
-  // fs.readFile(__dirname + '/index.html',
-  // function (err, data) {
-  //   if (err) {
-  //     res.writeHead(500);
-  //     return res.end('Error loading index.html');
-  //   }
-
-  //   res.writeHead(200);
-  //   res.end(data);
-  // });
-  if (!client)
-  {
-    res.writeHead(404);
-    return;
-  }
-  if (!png) {
-      png = client.createPngStream({ log : process.stderr });
-      png.on('error', function (err) {
-          console.error('png stream ERROR: ' + err);
-      });
+  fs.readFile(__dirname + '/../index.html',
+  function (err, data) {
+    if (err) {
+      res.writeHead(500);
+      return res.end('Error loading index.html');
     }
-  res.writeHead(200, { 'Content-Type': 'multipart/x-mixed-replace; boundary=--daboundary' });
-  png.on('data', sendPng);
 
-  function sendPng(buffer) {
-    console.log(buffer.length);
-    res.write('--daboundary\nContent-Type: image/png\nContent-length: ' + buffer.length + '\n\n');
-    res.write(buffer);
-  }
+    res.writeHead(200);
+    res.end(data);
+  });
 }
 
+function sendPng(buffer) {
+  i += 1;
+  fs.writeFile("/tmp/png_data/pic"+i+".png", buffer, function(err) {
+    if(err) {
+        console.log(err);
+    } else {
+        console.log("The file was saved!");
+    }
+  });
+}
 
 io.sockets.on('connection', function (socket) {
   
   socket.emit('news', { hello: 'world' });
-  
-
 
   socket.on('my other event', function (data) {
     console.log(data);
   });
 
 
-  var arDrone = require('ar-drone');
-  client = arDrone.createClient();
 
   socket.on('moving' , function(data){
     // client.config('general:navdata_demo', 'FALSE');
