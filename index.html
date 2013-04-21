@@ -19,10 +19,11 @@
         </style>
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="custom-theme/jquery-ui-1.10.0.custom.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
-    <body>
+    <body >
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
@@ -41,19 +42,22 @@
                     </div>
 
                     <div class="span6 offset1">
+                    <div id="v-slider"></div>
 
-                        	<a href="#" class="btn offset1" data-move="front">front</a>
-                            
+                            <a href="#" class="btn offset1" data-move="front" >front</a>
 
-                            <a href="#" class="btn offset1" data-move="up">up</a>
+                            <a href="#" class="btn offset1" data-move="up" >up</a>
                             <br/>
-                        	<a href="#" class="btn" data-move="left">Left</a>
+                        	<a href="#" class="btn" data-move="left" >Left</a>
                         	<a href="#" class="btn  btn-warning half-right" data-move="steady">Steady</a>
-                            <a href="#" class="btn  " data-move="right">Right</a>
+                            <a href="#" class="btn  " data-move="right" >Right</a>
                         <br/>
-                            <a href="#" class="btn offset1" data-move="back">back</a>
+                            
+                            <a href="#" class="btn btn-info" data-move="clockwise" >Turn Left</a>
+                            <a href="#" class="btn " data-move="back" >back</a>
+                            <a href="#" class="btn btn-info" data-move="counter-clockwise" >Turn Right</a>
 
-                            <a href="#" class="btn  offset1" data-move="down">down</a>
+                            <a href="#" class="btn " data-move="down" >down</a>
 
                             <br/><br/>
 
@@ -64,6 +68,7 @@
                     </div>
 
                 </div>
+                <img src="http://localhost:8080/out.png" />
 
             </div>
 
@@ -72,15 +77,18 @@
 
         </div> <!-- /container -->
 
-      <script src="js/jquery.js"></script> 
+        <script src="js/jquery.js"></script> 
         <script src="js/vendor/bootstrap.min.js"></script>
 
         <script src="js/main.js"></script>
 
    
         <script src="js/socket.io.js"></script>
-        <script src="js/script.js"></script>
+        <script src="js/jquery-1.9.1.js"></script>
+        <script src="js/jquery-ui.js"></script>
 
+
+        <script src="js/script.js"></script>
 
         <script>
           var socket = io.connect('http://localhost:8080'); // I changed the port from 80 to 8080 for the server
@@ -101,6 +109,5 @@
             // (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             // g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             // s.parentNode.insertBefore(g,s)}(document,'script'));
-        </script>
     </body>
 </html>

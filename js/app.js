@@ -71,7 +71,7 @@ io.sockets.on('connection', function (socket) {
 
     } else if( data.my == 'left' ){
 
-      client.left(.2);
+      client.left(.2*data.magnitude/100);
 
       console.log("went left");
       socket.emit('moving-back', 'Going Left');
@@ -79,7 +79,7 @@ io.sockets.on('connection', function (socket) {
     
     } else if( data.my == 'right' ){
 
-       client.right(.2);
+       client.right(.2*data.magnitude/100);
 
       console.log("went right");
       socket.emit('moving-back', 'Going Right');
@@ -97,7 +97,7 @@ io.sockets.on('connection', function (socket) {
     else if( data.my == 'up' ){
 
       client.stop();
-      client.up(.1);
+      client.up(.1*data.magnitude/100);
 
       console.log("went up a little");
       socket.emit('moving-back', 'A little up');
@@ -105,7 +105,7 @@ io.sockets.on('connection', function (socket) {
     else if( data.my == 'down' ){
 
       client.stop();
-      client.down(.1);
+      client.down(.1*data.magnitude/100);
 
       console.log("went down a little");
       socket.emit('moving-back', 'A little down');
@@ -120,24 +120,38 @@ io.sockets.on('connection', function (socket) {
       
     } else if( data.my == 'front' ){
 
-      client.front(.15);
+      client.front(.15*data.magnitude/100);
 
       console.log("forward");
       socket.emit('moving-back', 'Forward');
       
     } else if( data.my == 'back' ){
 
-      client.back(.15);
+      client.back(.15*data.magnitude/100);
 
       console.log("backwards");
       socket.emit('moving-back', 'Backwards');
       
     } else if( data.my == 'steady' ){
 
-      client.front(0);
+      client.up(0);
 
       console.log("Steady");
       socket.emit('moving-back', 'Steady');
+      
+    } else if( data.my == 'clockwise' ){
+
+      client.clockwise(.2*data.magnitude/100);
+
+      console.log("Rotating Clockwise");
+      socket.emit('moving-back', 'Rotating Clockwise');
+      
+    } else if( data.my == 'counter-clockwise' ){
+
+      client.counterClockwise(.2*data.magnitude/100);
+
+      console.log("Rotating Counter Clockwise");
+      socket.emit('moving-back', 'Rotating Counter Clockwise');
       
     } else {
 
