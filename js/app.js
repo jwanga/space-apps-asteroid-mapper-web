@@ -134,10 +134,24 @@ io.sockets.on('connection', function (socket) {
       
     } else if( data.my == 'steady' ){
 
-      client.front(0);
+      client.up(0);
 
       console.log("Steady");
       socket.emit('moving-back', 'Steady');
+      
+    } else if( data.my == 'clockwise' ){
+
+      client.clockwise(.2);
+
+      console.log("Rotating Clockwise");
+      socket.emit('moving-back', 'Rotating Clockwise');
+      
+    } else if( data.my == 'counter-clockwise' ){
+
+      client.counterClockwise(.2);
+
+      console.log("Rotating Counter Clockwise");
+      socket.emit('moving-back', 'Rotating Counter Clockwise');
       
     } else {
 
