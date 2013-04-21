@@ -63,6 +63,27 @@ io.sockets.on('connection', function (socket) {
       client.land();
 
       console.log("just landed");
+    }
+    else if( data.my == 'up' ){
+
+      client.stop();
+      client.up(.1);
+
+      console.log("went up a little");
+    }
+    else if( data.my == 'down' ){
+
+      client.stop();
+      client.down(.1);
+
+      console.log("wen down a little");
+    
+    } else if( data.my == 'reset' ){
+
+      client.disableEmergency();
+
+      console.log("reseted");
+      
     } else {
 
       console.log('no action');
