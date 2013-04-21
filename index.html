@@ -46,7 +46,7 @@
                 	<a href="#" class="btn span1 offset4" data-move="land">Land</a>
                 </div>
 
-                <div id="droneStream"></div>
+                <img id="droneStream"></img>
 
             </div>
 
@@ -65,15 +65,15 @@
         <script src="js/script.js"></script>
 
 
-
         <script>
           var socket = io.connect('http://localhost:8080'); // I changed the port from 80 to 8080 for the server
           socket.on('news', function (data) {
             console.log(data);
             socket.emit('my other event', { my: 'data' });
           });
-
-          // new NodecopterStream(document.getElementById("droneStream"));
+          socket.on('pic', function (data) {
+            // document.getElementById('droneStream').src='data:image/png;base64,'+data;
+          });
 
         </script>
 
