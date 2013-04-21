@@ -11,7 +11,34 @@
         <script src="socket.io.js"></script>
         <script src="three.js"></script>
         <script type="text/javascript">
-            var scene, camera, renderer, geometry, material, shape, particles, particlesMaterial, particleBuffer, particleSystem;
+            var scene, camera, renderer, geometry, material, shape, particles, particlesMaterial, particleBuffer, particleSystem, socket;
+
+            Array.prototype.move = function(pos1, pos2) {
+                // local variables
+                var i, tmp;
+                // cast input parameters to integers
+                pos1 = parseInt(pos1, 10);
+                pos2 = parseInt(pos2, 10);
+                // if positions are different and inside array
+                if (pos1 !== pos2 && 0 <= pos1 && pos1 <= this.length && 0 <= pos2 && pos2 <= this.length) {
+                  // save element from position 1
+                  tmp = this[pos1];
+                  // move element down and shift other elements up
+                  if (pos1 < pos2) {
+                    for (i = pos1; i < pos2; i++) {
+                      this[i] = this[i + 1];
+                    }
+                  }
+                  // move element up and shift other elements down
+                  else {
+                    for (i = pos1; i > pos2; i--) {
+                      this[i] = this[i - 1];
+                    }
+                  }
+                  // put element from position 1 to destination
+                  this[pos2] = tmp;
+                }
+              }
 
             particleBuffer = [];
 
@@ -27,6 +54,7 @@
                 transparent: true
             });
 
+
             for(var i = 0; i < 10000; i++){
                 particles.vertices.push(new THREE.Vector3(0, 0, 0));  
             }
@@ -39,7 +67,7 @@
             shape = new THREE.Mesh(geometry, material);
 
             //scene.add(shape);
-            camera.position.z = 75;
+            camera.position.z = 20;
             renderer.setClearColorHex(0x00000, 1);
             renderer.setSize( window.innerWidth, window.innerHeight);
 
@@ -47,25 +75,46 @@
             (function render () {
 
                 //particleSystem.rotation.x += .1;
-                particleSystem.rotation.y += .1;
+                //particleSystem.rotation.y += .1;
 
                 renderer.render(scene, camera);
 
                 requestAnimationFrame(render);
             })();
-
+            particleSystem.rotation.x += .4;
             function place(x,y,z){
-                var pool = particles.vertices.filter(function(element, index, array){
-                    return element.x === 0 && element.y === 0 && element.z === 0; 
-                });
+                //var pool = particles.vertices.filter(function(element, index, array){
+                    //return element.x === 0 && element.y === 0 && element.z === 0; 
+                //});
 
-                pool[0].x = x;
-                particles.verticesNeedUpdate = true;
+
+                //if(pool.length > 0){
+
+                    particles.vertices[0].x = x;
+                    particles.vertices[0].y = y;
+                    particles.vertices[0].z = -z;
+
+                    particles.vertices.move(0, particles.vertices.length - 1);
+
+                    //console.log(pool[0]);
+                    particles.verticesNeedUpdate = true;
+
+                    camera.position.x = x;
             }
 
-            for(var i = 0; i < 200; i++){
-                place(i * 20, 0, 0);
-            }
+            var j = 0
+            var socket = io.connect('http://localhost:8015');
+              console.log('connected');
+              socket.on('ping', function (data) {
+                //console.log(data);
+                for(var i = 0; i < 10; i++){
+                    place(j, i, data.z );
+                }
+
+                j++;
+            });
+
+            
 
             
 
